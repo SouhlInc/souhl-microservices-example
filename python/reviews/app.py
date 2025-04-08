@@ -71,8 +71,7 @@ class Book:
 
 @strawberry.type
 class Query:
-    # this field is not used in the supergraph schema
-    _hi: str = strawberry.field(resolver=lambda: "Hello World!")
+    hi: str = strawberry.field(resolver=lambda: "Hello World!")
 
 
 schema = strawberry.federation.Schema(

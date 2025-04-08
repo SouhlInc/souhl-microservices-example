@@ -23,7 +23,7 @@ type Book
   @join__type(graph: BOOKS, key: "id")
   @join__type(graph: REVIEWS, key: "id")
 {
-  id: ID!
+  id: String!
   title: String! @join__field(graph: BOOKS)
   reviewsCount: Int! @join__field(graph: REVIEWS)
   reviews: [Review!]! @join__field(graph: REVIEWS)
@@ -55,7 +55,7 @@ type Query
   @join__type(graph: REVIEWS)
 {
   allBooks: [Book!]! @join__field(graph: BOOKS)
-  Hi: String! @join__field(graph: REVIEWS)
+  hi: String! @join__field(graph: REVIEWS)
 }
 
 type Review

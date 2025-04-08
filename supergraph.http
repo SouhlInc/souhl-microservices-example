@@ -11,3 +11,12 @@ query allBooks {
     }
   }
 }
+
+###
+
+POST http://localhost:4000
+Content-Type: application/json
+
+query Hi {
+  hi
+}

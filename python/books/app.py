@@ -5,14 +5,14 @@ import strawberry
 
 @strawberry.federation.type(keys=["id"])
 class Book:
-    id: strawberry.ID
+    id: str
     title: str
 
 
 def get_all_books() -> List[Book]:
     return [
-        Book(id=strawberry.ID("book_1"), title="The Dark Tower"),
-        Book(id=strawberry.ID("book_2"), title="The Hobbit"),
+        Book(id="book_1", title="The Dark Tower"),
+        Book(id="book_2", title="The Hobbit"),
     ]
 
 

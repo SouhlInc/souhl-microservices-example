@@ -24,19 +24,11 @@ y
 ...
 ```
 
-## generate supergraph schema
-
-supergraph-schema.graphql を自動生成する
-
-```sh
-$ rover supergraph compose --config ./supergraph.yaml > supergraph-schema.graphql
-```
-
 ## run books service
 
 ```sh
 $ cd python/books
-$ python3 -m strawberry server --port 3500 app.py
+$ python3 -m strawberry server --port 3500 app
 ```
 
 ## run reviews service
@@ -45,6 +37,15 @@ $ python3 -m strawberry server --port 3500 app.py
 $ cd python/reviews
 $ python3 -m uvicorn app:app --host "0.0.0.0" --port 3501 --reload
 ```
+
+## generate supergraph schema
+
+supergraph-schema.graphql を自動生成する
+
+```sh
+$ rover supergraph compose --config ./supergraph.yaml > supergraph-schema.graphql
+```
+
 
 ## run router
 
