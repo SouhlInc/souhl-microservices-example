@@ -1,0 +1,11 @@
+federation_version: 2
+subgraphs:
+  reviews:
+    routing_url: http://localhost:3501/graphql
+    schema:
+      subgraph_url: http://localhost:3501/graphql
+
+  books:
+    routing_url: http://localhost:3500
+    schema:
+      subgraph_url: http://localhost:3500
