@@ -7,7 +7,7 @@
 ## Install Tools
 
 - rover (via brew)
-- router (binary)
+- apollo router (binary)
 
 ```sh
 $ brew install rover
