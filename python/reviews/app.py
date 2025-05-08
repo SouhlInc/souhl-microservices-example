@@ -2,8 +2,10 @@ from typing import List
 
 import strawberry
 from fastapi import FastAPI
+from lib.gql_shared.books_reviews_shared import ExternalValue
 from strawberry.dataloader import DataLoader
 from strawberry.fastapi import BaseContext, GraphQLRouter
+from strawberry.federation.schema_directives import External, Requires
 from strawberry.types import Info
 
 
@@ -30,7 +32,9 @@ async def reviews_by_book(
     root: "Book",
     info: Info["GraphqlContext", None],
 ) -> List["Review"]:
-    print(f"Loading reviews for book: {root.id}")
+    print(
+        f"Loading reviews for book: id={root.id}, external_value={root.external_value}"
+    )
     return await info.context.reviews_by_book_loader.load(root.id)
 
 
@@ -57,16 +61,20 @@ class Review:
 @strawberry.federation.type(keys=["id"])
 class Book:
     id: str
-    reviews_count: int
-    reviews: List[Review] = strawberry.field(resolver=reviews_by_book)
+    external_value: ExternalValue = strawberry.federation.field(directives=[External()])
+    # reviews_count: int
+    reviews: List[Review] = strawberry.federation.field(
+        resolver=reviews_by_book, directives=[Requires(fields="externalValue")]
+    )
 
-    # BookはBookサービスのentityであるが、ReviewsサービスにしかないBookのフィールドがあるならば、resolve_referenceで取得する
-    # keysにしていされているフィールド(今回はid)や、reviewsのようなresolverが直接指定されているフィールドしかないなら、resolve_referenceは書かなくて良い。
-    @classmethod
-    def resolve_reference(cls, id: str):
-        # here we could fetch the book from the database
-        # or even from an API
-        return Book(id=id, reviews_count=3)
+    # NOTE: external_valueを使うようにしたら、resolve_referenceが使えなくなった。requiresと共存できない？とりあえず使わなそうだし一旦良さそう。
+    # # BookはBookサービスのentityであるが、ReviewsサービスにしかないBookのフィールドがあるならば、resolve_referenceで取得する
+    # # keysにしていされているフィールド(今回はid)や、reviewsのようなresolverが直接指定されているフィールドしかないなら、resolve_referenceは書かなくて良い。
+    # @classmethod
+    # def resolve_reference(cls, id: str):
+    #     # here we could fetch the book from the database
+    #     # or even from an API
+    #     return Book(id=id, reviews_count=3)
 
 
 @strawberry.type

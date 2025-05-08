@@ -27,15 +27,15 @@ y
 ## run books service
 
 ```sh
-$ cd python/books
-$ python3 -m strawberry server --port 3500 app
+$ cd python
+$ python3 -m strawberry server --port 3500 books.app
 ```
 
 ## run reviews service
 
 ```sh
-$ cd python/reviews
-$ python3 -m uvicorn app:app --host "0.0.0.0" --port 3501 --reload
+$ cd python
+$ python3 -m uvicorn reviews.app:app --host "0.0.0.0" --port 3501 --reload
 ```
 
 ## generate supergraph schema
