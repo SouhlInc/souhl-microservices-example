@@ -24,17 +24,18 @@ type Book
   @join__type(graph: REVIEWS, key: "id")
 {
   id: String!
-  externalValue: ExternalValue! @join__field(graph: BOOKS) @join__field(graph: REVIEWS, external: true)
+  externalValue: ExternalValue! @join__field(graph: BOOKS)
   title: String! @join__field(graph: BOOKS)
-  reviews: [Review!]! @join__field(graph: REVIEWS, requires: "externalValue")
+  reviewsCount: Int! @join__field(graph: REVIEWS)
+  goodReviewsCount: Int! @join__field(graph: REVIEWS)
+  reviews: [Review!]! @join__field(graph: REVIEWS)
 }
 
 enum ExternalValue
   @join__type(graph: BOOKS)
-  @join__type(graph: REVIEWS)
 {
-  EXTERNAL_VALUE1 @join__enumValue(graph: BOOKS) @join__enumValue(graph: REVIEWS)
-  EXTERNAL_VALUE2 @join__enumValue(graph: BOOKS) @join__enumValue(graph: REVIEWS)
+  EXTERNAL_VALUE1 @join__enumValue(graph: BOOKS)
+  EXTERNAL_VALUE2 @join__enumValue(graph: BOOKS)
 }
 
 scalar join__FieldSet
